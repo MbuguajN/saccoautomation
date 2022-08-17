@@ -1,4 +1,13 @@
+import { useState } from "react";
+
 export default function Signin() {
+  const [username, setUserName] = useState("");
+  const [idNumber, setIdNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [homeAddress, setHomeAddress] = useState("");
+  const [workAddress, setWorkAddress] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <>
       <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
@@ -46,7 +55,31 @@ export default function Signin() {
       </nav>
 
       <div class="flex flex-col justify-center items-center mt-5">
-        <form class="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-10 ">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            fetch("http://localhost:3002/auth/signin", {
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json',
+            },
+              body: JSON.stringify({
+                mobileNumber: mobileNumber,
+                workAddress: workAddress,
+                email: email, 
+                idNumber: idNumber,
+                homeAddress: homeAddress,
+                username: username,
+                password: password,
+              }),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                console.log(data);
+              });
+          }}
+          class="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-10 "
+        >
           <div class="mb-4">
             <label
               class="block text-gray-700 text-sm font-bold mb-2"
@@ -59,6 +92,9 @@ export default function Signin() {
               id="username"
               type="text"
               placeholder="Username"
+              onChange={(e) => {
+                setUserName(e.target.value);
+              }}
             />
           </div>
           <div class="mb-4">
@@ -73,6 +109,9 @@ export default function Signin() {
               id="IDNUMBER"
               type="number"
               placeholder="National Id"
+              onChange={(e) => {
+                setIdNumber(e.target.value);
+              }}
             />
           </div>
 
@@ -88,6 +127,9 @@ export default function Signin() {
               id="EMAIL"
               type="text"
               placeholder="YOUR EMAIL ADDRESS"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
           </div>
 
@@ -103,6 +145,9 @@ export default function Signin() {
               id="Mobile"
               type="text"
               placeholder="MOBILE NUMBER"
+              onChange={(e) => {
+                setMobileNumber(e.target.value);
+              }}
             />
           </div>
 
@@ -118,6 +163,9 @@ export default function Signin() {
               id="HADDRESS"
               type="text"
               placeholder="YOUR HOME ADDRESS"
+              onChange={(e) => {
+                setHomeAddress(e.target.value);
+              }}
             />
           </div>
 
@@ -126,20 +174,42 @@ export default function Signin() {
               class="block text-gray-700 text-sm font-bold mb-2"
               for="username"
             >
-            WORK ADDRESS
+              WORK ADDRESS
             </label>
             <input
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="WADDRESS"
               type="text"
               placeholder="YOUR WORK ADDRESS"
+              onChange={(e) => {
+                setWorkAddress(e.target.value);
+              }}
             />
           </div>
-          
+
+          <div class="mb-6">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="password"
+            >
+              Password
+            </label>
+            <input
+              class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              id="password"
+              type="password"
+              placeholder="******************"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+            <p class="text-red-500 text-xs italic">Please choose a password.</p>
+          </div>
+
           <div class="flex items-center justify-center">
             <button
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
+              type="submit"
             >
               Signin
             </button>

@@ -1,4 +1,8 @@
+import { useState } from "react"
+
 export default function Login() {
+  const [username, setUserName]= useState("")
+  const [password, setPassword]= useState("")
     return (
         <>
         <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">

@@ -50,7 +50,7 @@ export default function Login() {
       
     </div>
     <div>
-      <a class="inline-block align-baseline font-bold text-sm text-black hover:text-blue-800 mt-3" href="djnsdjkndjk">
+      <a class="inline-block align-baseline font-bold text-sm text-black hover:text-blue-800 mt-3" href="/signin">
         Dont have account? Sign in.
       </a>
     </div>

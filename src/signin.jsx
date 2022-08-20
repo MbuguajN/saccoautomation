@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
+
+
 
 export default function Signin() {
   const [username, setUserName] = useState("");
@@ -8,6 +11,8 @@ export default function Signin() {
   const [homeAddress, setHomeAddress] = useState("");
   const [workAddress, setWorkAddress] = useState("");
   const [password, setPassword] = useState("");
+
+
   return (
     <>
       <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
@@ -58,7 +63,7 @@ export default function Signin() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            fetch("http://localhost:3002/auth/signin", {
+            fetch("http://localhost:3002/signin", {
               method: "POST",
               headers: {
                 'Content-Type': 'application/json',
@@ -77,6 +82,9 @@ export default function Signin() {
               .then((data) => {
                 console.log(data);
               });
+            
+            e.target.reset()
+            Navigate('/Dashboard', {replace: true})
           }}
           class="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-10 "
         >
@@ -208,6 +216,7 @@ export default function Signin() {
 
           <div class="flex items-center justify-center">
             <button
+            onClick={Signin}
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >

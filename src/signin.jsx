@@ -84,7 +84,7 @@ export default function Signin() {
               });
             
             e.target.reset()
-            Navigate('/Dashboard', {replace: true})
+            Navigate('/', {replace: true})
           }}
           class="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-10 "
         >
@@ -168,7 +168,7 @@ export default function Signin() {
             </label>
             <input
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="HADDRESS"
+              id="ADDRESS"
               type="text"
               placeholder="YOUR HOME ADDRESS"
               onChange={(e) => {
@@ -220,7 +220,7 @@ export default function Signin() {
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
-              Signin
+              SignIn
             </button>
           </div>
           <div></div>

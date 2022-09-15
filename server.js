@@ -5,7 +5,8 @@ const mysql = require('mysql')
 
 const bodyParser = require('body-parser');
 
-const cors = require('cors')
+const cors = require('cors');
+const { Result } = require('postcss');
 
 
 // create application/x-www-form-urlencoded parser
@@ -18,12 +19,21 @@ const db = mysql.createConnection({
   password: "sekiro",
   database: "sacco"
 })
-
 app.get('/', (req, res,next) => {
-  res.send('Hello World!')
+  res.send('server is active')
 })
 
 app.post("/login" , (req, res)=>{
+
+  const username = req.body.username
+  const password = req.body.password
+
+  db.query(
+    "SELECT * FROM User WHERE username = ? AND  password = ?",
+    [username, password],
+    
+  )
+
     console.log(req.body)
 ;})
 app.post("/signin" , (req, res)=>{
@@ -49,6 +59,8 @@ app.post("/signin" , (req, res)=>{
     console.log(req.body);
     res.status(200).json({status:"success "})
 ;})
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

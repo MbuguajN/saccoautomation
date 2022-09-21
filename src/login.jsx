@@ -1,8 +1,10 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [username, setUserName] = useState("");
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
+  const [status,setStatus] = useState("please enter password");
   return (
     <>
       <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
@@ -51,33 +53,34 @@ export default function Login() {
 
       <div class="flex flex-col justify-center items-center mt-12">
         <form
-          onSubmit = {(e) => {
+          onSubmit={(e) => {
             e.preventDefault();
             fetch("http://localhost:3002/login", {
               method: "POST",
               headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
               },
-              body : JSON.stringify({
+              body: JSON.stringify({
                 username: username,
                 password: password,
-              })
+              }),
             })
-            .then((res) => res.json())
-            .then((data) => {
-              console.log(data);
-            })
+              .then((res) => res.json())
+              .then((data) => {
+                console.log(data);
+                if(data.status === "success"){
+                  console.log("redirecting")
+                  navigate("/dashboard",{replace:true})
+                }
+                setStatus(data.status)
+              });
           }}
-              
           class="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-10 "
         >
           <div class="mb-4">
             <label
               class="block text-gray-700 text-sm font-bold mb-2"
               for="username"
-              onChange={(e) => {
-                setUserName(e.target.value);
-              }}
             >
               Username
             </label>
@@ -86,15 +89,15 @@ export default function Login() {
               id="username"
               type="text"
               placeholder="Username"
+              onChange={(e) => {
+                setUserName(e.target.value);
+              }}
             />
           </div>
           <div class="mb-6">
             <label
               class="block text-gray-700 text-sm font-bold mb-2"
               for="password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
             >
               Password
             </label>
@@ -103,14 +106,17 @@ export default function Login() {
               id="password"
               type="password"
               placeholder="******************"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
-            <p class="text-red-500 text-xs italic">Please enter a password.</p>
+            <p class="text-red-500 text-xs italic">{status}</p>
           </div>
           <div class="flex items-center justify-between">
             <button
-              onClick={Login}
+               
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
+              type="submit"
             >
               LOGIN
             </button>

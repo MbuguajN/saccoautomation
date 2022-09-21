@@ -6,7 +6,7 @@ const mysql = require('mysql')
 const bodyParser = require('body-parser');
 
 const cors = require('cors');
-const { Result } = require('postcss');
+
 
 
 // create application/x-www-form-urlencoded parser
@@ -19,24 +19,36 @@ const db = mysql.createConnection({
   password: "sekiro",
   database: "sacco"
 })
-app.get('/', (req, res,next) => {
+app.get('/', (req, res, next) => {
   res.send('server is active')
 })
 
-app.post("/login" , (req, res)=>{
+app.post("/login", (req, res) => {
 
   const username = req.body.username
   const password = req.body.password
 
   db.query(
     "SELECT * FROM User WHERE username = ? AND  password = ?",
-    [username, password],
-    
+    [username, password], (err, result, fields) => {
+      if (err) throw err
+      if (result.length === 0) {
+        res.status(200).json({ status: "user not found" })
+        console.log(result)
+      } else {
+        res.status(200).json({ status: "success" })
+        console.log(result)
+      }
+
+
+    }
+
   )
 
-    console.log(req.body)
-;})
-app.post("/signin" , (req, res)=>{
+
+    ;
+})
+app.post("/signin", (req, res) => {
 
   const username = req.body.username
   const email = req.body.email
@@ -48,17 +60,18 @@ app.post("/signin" , (req, res)=>{
 
 
   const sqlInsert =
-  "INSERT INTO User(username,email,idNumber,homeaddress,workAddress,mobileNumber, password) VALUES (?,?,?,?,?,?,?) ";
+    "INSERT INTO User(username,email,idNumber,homeaddress,workAddress,mobileNumber, password) VALUES (?,?,?,?,?,?,?) ";
 
   db.query(
     sqlInsert,
-    [username,email,idNumber,homeAddress,workAddress,mobileNumber,password],
+    [username, email, idNumber, homeAddress, workAddress, mobileNumber, password],
   )
-    // eslint-disable-next-line no-undef
-     
-    console.log(req.body);
-    res.status(200).json({status:"success "})
-;})
+  // eslint-disable-next-line no-undef
+
+  console.log(req.body);
+  res.status(200).json({ status: "success " })
+    ;
+})
 
 
 

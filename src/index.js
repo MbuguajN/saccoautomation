@@ -14,7 +14,7 @@ root.render(
     <BrowserRouter>
     <Routes>     
       <Route path="dashboard" element={<App/>}/>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Login/>} />
       <Route path='Adminlogin' element={<Adminlogin/>} />
       <Route path= 'signin' element={<Signin/>} />
     </Routes>

@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function Signin() {
+
+  const navigate = useNavigate();
+
   const [username, setUserName] = useState("");
   const [idNumber, setIdNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -11,6 +14,8 @@ export default function Signin() {
   const [homeAddress, setHomeAddress] = useState("");
   const [workAddress, setWorkAddress] = useState("");
   const [password, setPassword] = useState("");
+
+  const [status,setStatus] = useState ("Please enter password");
 
 
   return (
@@ -81,10 +86,13 @@ export default function Signin() {
               .then((res) => res.json())
               .then((data) => {
                 console.log(data);
-              });
-            
-            e.target.reset()
-            Navigate('/', {replace: true})
+                if(data.status === "success"){
+                  e.target.reset()
+                  console.log("redirecting")
+                  navigate("/", {replace:true})
+                }
+                setStatus(data.status)
+              })
           }}
           class="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-10 "
         >
@@ -211,7 +219,7 @@ export default function Signin() {
                 setPassword(e.target.value);
               }}
             />
-            <p class="text-red-500 text-xs italic">Please choose a password.</p>
+            <p class="text-red-500 text-xs italic">{status}</p>
           </div>
 
           <div class="flex items-center justify-center">

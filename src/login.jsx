@@ -1,10 +1,17 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [username, setUserName] = useState("");
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
-  const [status,setStatus] = useState("please enter password");
+  const [status, setStatus] = useState("please enter password");
+  useEffect(()=>{
+    if(sessionStorage.getItem("auth")){
+      navigate("/dashboard", { replace: true });
+    }
+  },[navigate])
+  
   return (
     <>
       <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
@@ -54,6 +61,7 @@ export default function Login() {
       <div class="flex flex-col justify-center items-center mt-12">
         <form
           onSubmit={(e) => {
+            
             e.preventDefault();
             fetch("http://localhost:3002/login", {
               method: "POST",
@@ -68,11 +76,13 @@ export default function Login() {
               .then((res) => res.json())
               .then((data) => {
                 console.log(data);
-                if(data.status === "success"){
-                  console.log("redirecting")
-                  navigate("/dashboard",{replace:true})
+                if (data.status === "success") {
+                  e.target.reset();
+                  console.log("redirecting");
+                  navigate("/dashboard", { replace: true });
                 }
-                setStatus(data.status)
+                sessionStorage.setItem("auth", data.token);
+                setStatus(data.status);
               });
           }}
           class="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-10 "
@@ -114,7 +124,6 @@ export default function Login() {
           </div>
           <div class="flex items-center justify-between">
             <button
-               
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >

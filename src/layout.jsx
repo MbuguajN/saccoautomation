@@ -4,8 +4,8 @@ function Layout({ children }) {
   const navigate = useNavigate();
 
   return (
-    <div className="grid grid-cols-2">
-      <aside class="w-64" aria-label="Sidebar">
+    <div data-theme="light" className=" overflow-y-hidden grid grid-cols-[500px_minmax(100px,_1fr)_200px]">
+      <aside class="w-64 " aria-label="Sidebar">
         <div class="h-screen overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
           <ul class="space-y-2">
             <li>
@@ -30,7 +30,7 @@ function Layout({ children }) {
                 >
                   <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                 </svg>
-                <span class="flex-1 ml-3 whitespace-nowrap">Kanban</span>
+                <span class="flex-1 ml-3 whitespace-nowrap">User Account</span>
                 <span class="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">
                   Pro
                 </span>
@@ -75,7 +75,7 @@ function Layout({ children }) {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
+                <span class="flex-1 ml-3 whitespace-nowrap">Update savings</span>
               </a>
             </li>
             <li>
@@ -96,7 +96,7 @@ function Layout({ children }) {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                <span class="flex-1 ml-3 whitespace-nowrap">Products</span>
+                <span class="flex-1 ml-3 whitespace-nowrap">Request Loan</span>
               </a>
             </li>
             <li>
@@ -117,7 +117,7 @@ function Layout({ children }) {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                <span class="flex-1 ml-3 whitespace-nowrap">Sign In</span>
+                <span class="flex-1 ml-3 whitespace-nowrap">Repay Loan</span>
               </a>
             </li>
             <li>
@@ -138,7 +138,7 @@ function Layout({ children }) {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                <span class="flex-1 ml-3 whitespace-nowrap">Sign Up</span>
+                <span class="flex-1 ml-3 whitespace-nowrap">check Stats</span>
               </a>
             </li>
             <li>

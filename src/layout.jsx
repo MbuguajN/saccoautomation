@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Layout({ children }) {
   const navigate = useNavigate();
@@ -17,8 +17,8 @@ function Layout({ children }) {
               </a>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="/dashboard"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -31,14 +31,12 @@ function Layout({ children }) {
                   <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                 </svg>
                 <span class="flex-1 ml-3 whitespace-nowrap">User Account</span>
-                <span class="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">
-                  Pro
-                </span>
-              </a>
+                
+              </Link>
             </li>
             <li>
-              <a
-                href="e"
+              <Link
+                to="/inbox"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -52,10 +50,8 @@ function Layout({ children }) {
                   <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path>
                 </svg>
                 <span class="flex-1 ml-3 whitespace-nowrap">Inbox</span>
-                <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">
-                  3
-                </span>
-              </a>
+                
+              </Link>
             </li>
             <li>
               <a
@@ -79,8 +75,8 @@ function Layout({ children }) {
               </a>
             </li>
             <li>
-              <a
-                href="e"
+              <Link
+                to="/requestloan"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -97,11 +93,11 @@ function Layout({ children }) {
                   ></path>
                 </svg>
                 <span class="flex-1 ml-3 whitespace-nowrap">Request Loan</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="e"
+              <Link
+                to='/repayloan'
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -118,7 +114,7 @@ function Layout({ children }) {
                   ></path>
                 </svg>
                 <span class="flex-1 ml-3 whitespace-nowrap">Repay Loan</span>
-              </a>
+              </Link>
             </li>
             <li>
               <a

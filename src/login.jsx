@@ -6,12 +6,12 @@ export default function Login() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("please enter password");
-  useEffect(()=>{
-    if(sessionStorage.getItem("auth")){
+  useEffect(() => {
+    if (sessionStorage.getItem("auth")) {
       navigate("/dashboard", { replace: true });
     }
-  },[navigate])
-  
+  }, [navigate]);
+
   return (
     <>
       <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
@@ -58,10 +58,9 @@ export default function Login() {
         </div>
       </nav>
 
-      <div class="flex flex-col justify-center items-center mt-12">
+      <div class="flex flex-col justify-center items-center mt-12 ">
         <form
           onSubmit={(e) => {
-            
             e.preventDefault();
             fetch("http://localhost:3002/login", {
               method: "POST",

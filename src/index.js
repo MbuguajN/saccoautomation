@@ -10,6 +10,8 @@ import App from './App';
 import RepayLoan from './repayloan';
 import RequestLoan from './requestloan';
 import Inbox from './inbox';
+import UpdateSavingsPage from './updatesavings';
+import CheckStats from './checkstats';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -23,6 +25,9 @@ root.render(
       <Route path='repayloan' element={<RepayLoan/>}/>
       <Route path='requestloan' element={<RequestLoan/>}/>
       <Route path= 'inbox' element={<Inbox/>}/>
+      <Route path='updatesavings' element={<UpdateSavingsPage/>}/>
+      <Route path= 'checkstats' element={<CheckStats/>}/>
+
     </Routes>
   </BrowserRouter>
   </React.StrictMode>

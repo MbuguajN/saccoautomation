@@ -6,8 +6,8 @@ function Layout({ children }) {
   return (
     <div data-theme="light" className=" overflow-y-hidden grid grid-cols-[500px_minmax(100px,_1fr)_200px]">
       <aside class="w-64 " aria-label="Sidebar">
-        <div class="h-screen overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
-          <ul class="space-y-2">
+        <div class="h-min overflow-y-auto py-4 px-6 bg-gray-50 rounded dark:bg-gray-800">
+          <ul class="space-y-5">
             <li>
               <a
                 href="#e"
@@ -54,8 +54,8 @@ function Layout({ children }) {
               </Link>
             </li>
             <li>
-              <a
-                href="e"
+              <Link
+                to="/updatesavings"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -72,7 +72,7 @@ function Layout({ children }) {
                   ></path>
                 </svg>
                 <span class="flex-1 ml-3 whitespace-nowrap">Update savings</span>
-              </a>
+              </Link>
             </li>
             <li>
               <Link
@@ -117,8 +117,8 @@ function Layout({ children }) {
               </Link>
             </li>
             <li>
-              <a
-                href="e"
+              <Link
+                to="/checkstats"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -135,11 +135,11 @@ function Layout({ children }) {
                   ></path>
                 </svg>
                 <span class="flex-1 ml-3 whitespace-nowrap">check Stats</span>
-              </a>
+              </Link>
             </li>
             <li>
               <a
-                href="#"
+                
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 onClick={()=>{
                   sessionStorage.removeItem("auth");

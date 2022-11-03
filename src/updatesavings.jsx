@@ -1,9 +1,9 @@
 import Layout from "./layout";
-
-export default function RepayLoan() {
+const UpdateSavingsPage = () => {
   return (
     <Layout>
-      <div className="stats my-32 bg-primary text-primary-content">
+      
+      <div className="stats my-32 bg-secondary text-primary-content">
         <div className="stat">
           <div className="stat-title">Balance</div>
           <div className="stat-value">$89,400</div>
@@ -16,14 +16,6 @@ export default function RepayLoan() {
           <div className="stat-actions"></div>
         </div>
       </div>
-
-      <div className="stats shadow bg-stone-400">
-        <div className="stat">
-          <div className="stat-title">DAYS LEFT </div>
-          <div className="stat-value">10</div>
-        </div>
-      </div>
-      
       <div className="form-control">
         <label className="label">
           <span className="label-text">Enter amount to repay</span>
@@ -43,4 +35,5 @@ export default function RepayLoan() {
       </div>
     </Layout>
   );
-}
+};
+export default UpdateSavingsPage;

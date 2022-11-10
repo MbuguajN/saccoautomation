@@ -101,7 +101,7 @@ export default function Signin() {
               class="block text-gray-700 text-sm font-bold mb-2"
               for="username"
             >
-              Username
+              Name
             </label>
             <input
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -141,7 +141,7 @@ export default function Signin() {
             <input
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="EMAIL"
-              type="text"
+              type="email"
               placeholder="YOUR EMAIL ADDRESS"
               onChange={(e) => {
                 setEmail(e.target.value);

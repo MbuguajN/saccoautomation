@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors');
 
 const bcrypt = require('bcrypt');
+const { PrismaClientRustPanicError } = require('@prisma/client/runtime');
 const saltRounds = 10
 
 // create application/x-www-form-urlencoded parser
@@ -101,6 +102,34 @@ app.post("/signin", (req, res) => {
       .status(200).json({ status: "success", token: token })
   })
 
+})
+
+app.post("/update-balance", (req,res) => {
+  const balance  = req.body.balance;
+  console.log(balance)
+  const tokenDecrypted = jwt.decode(req.body.token);
+  const username = tokenDecrypted.split(" ")[0];
+  const sqlInsert =  `UPDATE user SET Balance = '${balance}' WHERE username = '${username}'`;
+  db.query(
+    sqlInsert,(err,results,field)=>{
+      if (err) throw err;
+      console.log(results);
+      res.status(200).json({ status: "success" });
+
+    }
+  )
+
+})
+
+app.get("/guarantors" , (req,res) =>{
+  
+  db.query("SELECT * FROM User", (err,results) => {
+    console.log(results)
+    res.status(200).json({ results})
+  })
+
+
+  
 })
 
 

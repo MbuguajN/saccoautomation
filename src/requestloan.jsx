@@ -17,7 +17,20 @@ export default function RequestLoan() {
         setGuarantors(data);
       });
   };
+  const stkPushSim = () => {
+    fetch("http://localhost:3002/stk", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        phone: "113224807",
+        amount: 1,
+      }),
+    });
+  };
   useEffect(() => {
+    stkPushSim();
     getGuarantors();
   }, []);
   if (guarantors) {
@@ -33,9 +46,7 @@ export default function RequestLoan() {
         </th>
         <td>
           <div className="flex items-center space-x-3">
-            <div className="avatar">
-              
-            </div>
+            <div className="avatar"></div>
             <div>
               <div className="font-bold">{guarantor.username}</div>
               <div className="text-sm opacity-50">{guarantor.email}</div>

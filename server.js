@@ -5,11 +5,11 @@ const mysql = require('mysql')
 const jwt = require("jsonwebtoken");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
-
+const axios = require("axios")
 const cors = require('cors');
 
 const bcrypt = require('bcrypt');
-const { PrismaClientRustPanicError } = require('@prisma/client/runtime');
+const { data } = require('autoprefixer');
 const saltRounds = 10
 
 // create application/x-www-form-urlencoded parser
@@ -37,7 +37,7 @@ app.post("/userdata", (req, res) => {
   const tokenDecrypted = jwt.decode(req.body.token);
   const username = tokenDecrypted.split(" ")[0];
   //const password = tokenDecrypted.split(" ")[1];
-  
+
   db.query("SELECT * FROM User WHERE username = ?", username, (err, result, fields) => {
     if (result.length === 0) {
       res.status(200).json({ status: "user not found" });
@@ -104,14 +104,14 @@ app.post("/signin", (req, res) => {
 
 })
 
-app.post("/update-balance", (req,res) => {
-  const balance  = req.body.balance;
+app.post("/update-balance", (req, res) => {
+  const balance = req.body.balance;
   console.log(balance)
   const tokenDecrypted = jwt.decode(req.body.token);
   const username = tokenDecrypted.split(" ")[0];
-  const sqlInsert =  `UPDATE user SET Balance = '${balance}' WHERE username = '${username}'`;
+  const sqlInsert = `UPDATE user SET Balance = '${balance}' WHERE username = '${username}'`;
   db.query(
-    sqlInsert,(err,results,field)=>{
+    sqlInsert, (err, results, field) => {
       if (err) throw err;
       console.log(results);
       res.status(200).json({ status: "success" });
@@ -121,16 +121,89 @@ app.post("/update-balance", (req,res) => {
 
 })
 
-app.get("/guarantors" , (req,res) =>{
-  
-  db.query("SELECT * FROM User", (err,results) => {
+app.get("/guarantors", (req, res) => {
+
+  db.query("SELECT * FROM User", (err, results) => {
     console.log(results)
-    res.status(200).json({ results})
+    res.status(200).json({ results })
   })
 
 
-  
+
 })
+
+app.get("/token", (req, res) => {
+  generateToken();
+})
+
+const generateToken = async (req, res, next) => {
+  const secret = process.env.MPESA_SECRET_KEY;
+  const consumer = process.env.MPESA_CONSUMER_KEY;
+
+  const auth = new Buffer.from("${consumer} : ${secret}").toString("base64")
+
+  await app.get("https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials", {
+    headers: {
+      authorization: 'Basic ${auth}'
+    }
+  })
+    .then((data) => {
+      console.log(data.token);
+      next();
+    }).catch((err) => {
+      console.log(err.message);
+      res.status(400).json(err.message);
+    })
+}
+
+app.post("/stk",  async (req, res) => {
+  const phone = req.body.phone;
+  const amount = req.body.amount
+
+  let date = new Date();
+  let timestamp =
+    date.getFullYear() +
+    ("0" + (date.getMonth() + 1)).slice(-2) +
+    ("0" + date.getDate()).slice(-2) +
+    ("0" + date.getHours()).slice(-2) +
+    ("0" + date.getMinutes()).slice(-2) +
+    ("0" + date.getSeconds()).slice(-2);
+
+  const shortcode = 174379;
+  const passkey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
+
+  const password = new Buffer.from(shortcode + passkey + timestamp).toString("base64")
+
+
+  const instanceAuthToken = await axios({
+    url: "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
+    method: "get",
+    auth: {
+      username: "Azs2KejU1ARvIL5JdJsARbV2gDrWmpOB",
+      password: "hipGvFJbOxri330c",
+    },
+  });
+  const buyRequest = await axios({
+    url: "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
+    data: {
+      BusinessShortCode: shortcode,
+      Password: password,
+      Timestamp: timestamp,
+      TransactionType: "CustomerPayBillOnline",
+      Amount: amount,
+      PartyA: parseInt(`254${phone}`),
+      PartyB: shortcode,
+      PhoneNumber: parseInt(`254${phone}`),
+      CallBackURL: "https://8696-102-217-126-3.in.ngrok.io",
+      AccountReference: "2ddadaw",
+      TransactionDesc: "Ticket Purchase",
+    },
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${instanceAuthToken.data.access_token}`,
+    },
+  });
+});
 
 
 

@@ -12,6 +12,7 @@ import RequestLoan from './requestloan';
 import Inbox from './inbox';
 import UpdateSavingsPage from './updatesavings';
 import CheckStats from './checkstats';
+import Admindash from './admindash'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -27,6 +28,7 @@ root.render(
       <Route path= 'inbox' element={<Inbox/>}/>
       <Route path='updatesavings' element={<UpdateSavingsPage/>}/>
       <Route path= 'checkstats' element={<CheckStats/>}/>
+      <Route path= 'admindash' element={<Admindash/>}/>
 
     </Routes>
   </BrowserRouter>

@@ -1,4 +1,5 @@
 const express = require('express')
+
 const app = express()
 const port = 3002
 const mysql = require('mysql')
@@ -9,9 +10,9 @@ const axios = require("axios")
 const cors = require('cors');
 
 const bcrypt = require('bcrypt');
-const { data } = require('autoprefixer');
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
 const saltRounds = 10
-
 // create application/x-www-form-urlencoded parser
 app.use(bodyParser.json())
 app.use(cors({
@@ -74,6 +75,12 @@ app.post("/login", (req, res) => {
   );
 });
 
+
+
+
+
+
+
 app.post("/signin", (req, res) => {
   const username = req.body.username
   const email = req.body.email
@@ -124,7 +131,7 @@ app.post("/update-balance", (req, res) => {
 app.get("/guarantors", (req, res) => {
 
   db.query("SELECT * FROM User", (err, results) => {
-    console.log(results)
+    //console.log(results)
     res.status(200).json({ results })
   })
 
@@ -156,7 +163,7 @@ const generateToken = async (req, res, next) => {
     })
 }
 
-app.post("/stk",  async (req, res) => {
+app.post("/stk", async (req, res) => {
   const phone = req.body.phone;
   const amount = req.body.amount
 
@@ -204,6 +211,23 @@ app.post("/stk",  async (req, res) => {
     },
   });
 });
+app.post("/addLoan", async (req, res) => {
+  const loanAmount = req.body.loanAmount;
+  const guarantor = req.body.guarantor;
+  const tokenDecrypted = jwt.decode(req.body.token);
+  const username = tokenDecrypted.split(" ")[0];
+
+  const guarantorObj = await prisma.user.findFirst({ where: { username: guarantor } });
+  const borrower = await prisma.user.findFirst({ where: { username: username } });
+  const loan = await prisma.loans.create({ data: { amount: loanAmount, guarantor_id: guarantorObj.id, user_id: borrower.id } });
+  await prisma.loan_guarantors.create({ data: { user_id: guarantorObj.id, loan_id: loan.id } });
+  res
+    .status(200).json({ status: "success", loan: loan })
+})
+app.post("/guarantorRequests", async (req, res) => {
+
+})
+
 
 
 

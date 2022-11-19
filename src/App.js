@@ -1,11 +1,10 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { Link } from 'react-router-dom';
-import { FcMenu } from "react-icons/fc"
 import Layout from './layout';
 import { useEffect, useState } from 'react';
 import Profile from './UserProfile';
-import UpdateSavingsPage from './updatesavings';
+
 function App() {
   const [data, setData] = useState();
   useEffect(() => {

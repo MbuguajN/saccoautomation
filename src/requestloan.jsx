@@ -15,7 +15,22 @@ export default function RequestLoan() {
 
     formState: { errors },
   } = useForm();
-  const onsubmit = (data) => console.log(data);
+  const onsubmit = (data) => {
+    console.log(data);
+    fetch("http://localhost:3002/addLoan", {
+      method: "POST",
+      body: JSON.stringify({
+        guarantor: data.guarantor,
+        loanAmount: data.loanAmount,
+        token: sessionStorage.getItem("auth"),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  };
 
   const getGuarantors = () => {
     fetch("http://localhost:3002/guarantors", {
@@ -87,16 +102,16 @@ export default function RequestLoan() {
         </table>
       </div>
       <form onSubmit={handleSubmit(onsubmit)}>
-        <select {...register("guarantor",{required:"select a guarantor"})} className="select select-bordered m-4 w-full max-w-xs">
+        <select
+          {...register("guarantor", { required: "select a guarantor" })}
+          className="select select-bordered m-4 w-full max-w-xs"
+        >
           <option disabled selected>
             Pick your Loan guarantor
           </option>
           {guarantors?.results?.map((guarantor, index) => {
             return (
-              <option
-                key={index}
-                val={guarantor.username}
-              >
+              <option key={index} val={guarantor.username}>
                 {guarantor.username}
               </option>
             );
@@ -113,7 +128,9 @@ export default function RequestLoan() {
               <span>Amount</span>
               <input
                 type="number"
-                {...register("loanAmount",{required:"set a loan amount before submitting"})}
+                {...register("loanAmount", {
+                  required: "set a loan amount before submitting",valueAsNumber:true
+                })}
                 placeholder="enter amount"
                 className="input input-bordered text-black"
               />

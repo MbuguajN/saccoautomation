@@ -1,27 +1,63 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
-model User{
-  id String  @id @default(cuid())
-  username String 
-  email String @unique
-  HomeAddress String
-  WorkAddress String
-  IdNumber Int
-  MobileNumber Int
-}
-model Admin{
-  id String @default(cuid())
-  username String 
+
+model Admin {
+  id       Int    @id @default(autoincrement())
+  username String
   password String @unique
+}
+
+model User {
+  id           Int    @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  username     String @unique(map: "username_UNIQUE")
+  HomeAddress  String
+  IdNumber     Int    @unique(map: "IdNumber_UNIQUE")
+  MobileNumber Int
+  WorkAddress  String
+  email        String @unique
+  password     String @db.VarChar(500)
+  Balance      Float? @default(0)
+  LoanLimit    Float?
+  request      Int?
+
+  @@index([request], map: "req_id_idx")
+}
+
+model loan_guarantors {
+  id      Int @id @unique(map: "id_UNIQUE")  @default(autoincrement())
+
+  loan_id Int
+  user_id Int
+
+  @@index([loan_id], map: "loan_id_idx")
+  @@index([user_id], map: "user_id_idx")
+}
+
+model loans {
+  id            Int       @id @default(autoincrement())
+  user_id       Int
+  date_borrowed DateTime? @default(now())
+  date_due      DateTime? @default(now())
+  amount        Int
+  status        Boolean?
+  guarantor_id  Int?
+
+  @@index([user_id], map: "borrower_id_idx")
+  @@index([guarantor_id], map: "guarantor_idx")
+}
+
+model reqests {
+  id      Int  @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  loan_id Int
+  amount  Int?
+
+  @@index([loan_id], map: "loan_id_idx")
 }

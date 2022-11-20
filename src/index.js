@@ -13,6 +13,12 @@ import Inbox from './inbox';
 import UpdateSavingsPage from './updatesavings';
 import CheckStats from './checkstats';
 import Admindash from './admindash'
+import Loanrequest from './loanrequest'
+import Adminstat from './adminstat';
+import Newuser from './newuser';
+import Monitor from './monitor';
+import Notice from './notice';
+import Loans from './loans';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -29,6 +35,12 @@ root.render(
       <Route path='updatesavings' element={<UpdateSavingsPage/>}/>
       <Route path= 'checkstats' element={<CheckStats/>}/>
       <Route path= 'admindash' element={<Admindash/>}/>
+      <Route path='loanrequest' element = {<Loanrequest/>}/>
+      <Route path= 'adminstat' element ={<Adminstat/>}/>
+      <Route path='newuser' element={<Newuser/>}/>
+      <Route path='monitor' element={<Monitor/>}/>
+      <Route path='notice' element={<Notice/>}/>
+      <Route path='loans' element= {<Loans/>}/>
 
     </Routes>
   </BrowserRouter>

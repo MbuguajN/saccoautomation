@@ -11,16 +11,16 @@ function Adminlayout({ children }) {
         <div class="h-min overflow-y-auto py-8 px-6 bg-gray-50 rounded dark:bg-gray-800">
           <ul class="space-y-5">
             <li>
-              <a
-                href="#e"
+              <Link
+                to ="./adminstat"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <span class="ml-3">Dashboard</span>
-              </a>
+              </Link>
             </li>
             <li>
               <Link
-                to="/dashboard"
+                to="/loanrequest"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -38,7 +38,7 @@ function Adminlayout({ children }) {
             </li>
             <li>
               <Link
-                to="/inbox"
+                to="/newuser"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -57,7 +57,7 @@ function Adminlayout({ children }) {
             </li>
             <li>
               <Link
-                to="/updatesavings"
+                to="/monitor"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -78,7 +78,7 @@ function Adminlayout({ children }) {
             </li>
             <li>
               <Link
-                to="/requestloan"
+                to="/notice"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -99,7 +99,7 @@ function Adminlayout({ children }) {
             </li>
             <li>
               <Link
-                to='/repayloan'
+                to='/loans'
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg

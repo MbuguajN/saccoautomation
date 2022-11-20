@@ -129,7 +129,8 @@ export default function RequestLoan() {
               <input
                 type="number"
                 {...register("loanAmount", {
-                  required: "set a loan amount before submitting",valueAsNumber:true
+                  required: "set a loan amount before submitting",
+                  valueAsNumber: true,
                 })}
                 placeholder="enter amount"
                 className="input input-bordered text-black"

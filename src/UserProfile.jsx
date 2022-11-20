@@ -6,7 +6,7 @@ function Profile(props) {
   const [editHomeAddress, setEditHomeAddress] = useState(false);
 
   return (
-    <div className="my-10 justify-self-start card bg-base-100 shadow-xl">
+    <div className="justify-self-start card bg-base-100 shadow-xl ">
       <div className="avatar my-1 mx-auto">
         <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
           <img src="https://placeimg.com/192/192/people" />
@@ -131,7 +131,7 @@ function Profile(props) {
               <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt className="text-sm font-medium text-gray-500">ID Number</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                  {props.data.Balance}
+                  {props.data.IdNumber}
                 </dd>
               </div>
             </dl>

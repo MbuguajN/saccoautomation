@@ -6,7 +6,6 @@ import Adminstat from './adminstat';
 function Admindash() {
   return (
     <Adminlayout>
-      <Adminstat/>
         
     </Adminlayout>
 

@@ -66,7 +66,7 @@ function UpdateSavingsPage() {
   
   return (
     <Layout>
-      <div className="stats my-32 bg-secondary text-primary-content">
+      <div className="stats my-32 mx-24 bg-secondary text-primary-content">
         <div className="stat">
           <div className="stat-title">Balance</div>
           <div className="stat-value">KSH {userData?.Balance}</div>
@@ -79,7 +79,7 @@ function UpdateSavingsPage() {
           <div className="stat-actions"></div>
         </div>
       </div>
-      <form className="form-control" onSubmit={handleSubmit(onsubmit)}>
+      <form className="form-control mx-28" onSubmit={handleSubmit(onsubmit)}>
         <label className="label">
           <span className="label-text">Enter amount to add</span>
           <span className="label-text-alt text-error">

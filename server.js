@@ -128,6 +128,19 @@ app.post("/update-balance", (req, res) => {
 
 })
 
+app.post("/loanlimit", async (req, res) => {
+
+  const tokenDecrypted = jwt.decode(req.body.token);
+  const username = tokenDecrypted.split(" ")[0];
+  const user = await prisma.user.findFirst({ where: { username: username } });
+  res.status(200).json({ loanLimit: user.Balance * 3 });
+
+
+})
+
+
+
+
 app.get("/guarantors", (req, res) => {
 
   db.query("SELECT * FROM User", (err, results) => {
@@ -219,18 +232,29 @@ app.post("/addLoan", async (req, res) => {
 
   const guarantorObj = await prisma.user.findFirst({ where: { username: guarantor } });
   const borrower = await prisma.user.findFirst({ where: { username: username } });
-  const loan = await prisma.loans.create({ data: { amount: loanAmount, guarantor_id: guarantorObj.id, user_id: borrower.id } });
-  await prisma.loan_guarantors.create({ data: { user_id: guarantorObj.id, loan_id: loan.id } });
+  const loan = await prisma.loans.create({ data: { amount: loanAmount, guarantor_id: guarantorObj.id, userId: borrower.id } });
+  await prisma.loan_guarantors.create({ data: { guarantorId: guarantorObj.id, loansId: loan.id } });
   res
     .status(200).json({ status: "success", loan: loan })
 })
-app.post("/guarantorRequests", async (req, res) => {
 
+app.post('/getGuarantorReq', async (req, res) => {
+  const tokenDecrypted = jwt.decode(req.body.token);
+  const username = tokenDecrypted.split(" ")[0];
+  const user = await prisma.user.findFirst({ where: { username: username }, include: { loan_guarantors: { include: { loan: { select: { User: true, amount: true } } } } } });
+  res
+    .status(200).json({ status: "success", user: user });
 })
 
 
 
+app.get("/getLoans", async (req, res) => {
+  const loans = await prisma.loans.findMany({ where: { statusAdminAccept: false, }, include: { User: true, loan_guarantors: { include: { guarantor: true } } } });
+  res
+    .status(200).json({ status: "success", loans: loans });
 
+
+})
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

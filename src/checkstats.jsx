@@ -20,7 +20,7 @@ export default function CheckStats() {
             ></svg>
           </div>
           <div className="stat-title">Loan Limit</div>
-          <div className="stat-value text-primary">25000</div>
+          <div className="stat-value text-primary">KSH 25000</div>
         </div>
 
         <div className="stat">
@@ -42,7 +42,7 @@ export default function CheckStats() {
         </div>
         <div className="stat">
           <div className="stat-title">savings balance</div>
-          <div className="stat-value">$89,400</div>
+          <div className="stat-value">KSH 89,400</div>
           <div className="stat-actions">
             <button onClick={navigateupdate} className="btn btn-sm btn-success">
               Add Savings

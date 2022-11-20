@@ -16,48 +16,46 @@ model Admin {
 }
 
 model User {
-  id           Int    @id @unique(map: "id_UNIQUE") @default(autoincrement())
-  username     String @unique(map: "username_UNIQUE")
+  id           Int     @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  username     String  @unique(map: "username_UNIQUE")
   HomeAddress  String
-  IdNumber     Int    @unique(map: "IdNumber_UNIQUE")
+  IdNumber     Int     @unique(map: "IdNumber_UNIQUE")
   MobileNumber Int
   WorkAddress  String
-  email        String @unique
-  password     String @db.VarChar(500)
-  Balance      Float? @default(0)
+  email        String  @unique
+  password     String  @db.VarChar(500)
+  Balance      Float?  @default(0)
   LoanLimit    Float?
   request      Int?
+  loansArray   loans[]
 
-  @@index([request], map: "req_id_idx")
+  loan_guarantors loan_guarantors?
 }
 
 model loan_guarantors {
-  id      Int @id @unique(map: "id_UNIQUE")  @default(autoincrement())
-
-  loan_id Int
-  user_id Int
-
-  @@index([loan_id], map: "loan_id_idx")
-  @@index([user_id], map: "user_id_idx")
+  id          Int    @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  guarantor   User?  @relation(fields: [guarantorId], references: [id])
+  loan        loans? @relation(fields: [loansId], references: [id])
+  loansId     Int?   @unique
+  guarantorId Int?   @unique
 }
 
 model loans {
-  id            Int       @id @default(autoincrement())
-  user_id       Int
-  date_borrowed DateTime? @default(now())
-  date_due      DateTime? @default(now())
-  amount        Int
-  status        Boolean?
-  guarantor_id  Int?
+  id                   Int       @id @default(autoincrement())
+  date_borrowed        DateTime? @default(now())
+  date_due             DateTime? @default(now())
+  amount               Int
+  statusAdminAccept    Boolean?  @default(false)
+  statusGuaratorAccept Boolean?  @default(false)
 
-  @@index([user_id], map: "borrower_id_idx")
-  @@index([guarantor_id], map: "guarantor_idx")
+  guarantor_id    Int?
+  User            User?            @relation(fields: [userId], references: [id])
+  userId          Int?
+  loan_guarantors loan_guarantors?
 }
 
 model reqests {
   id      Int  @id @unique(map: "id_UNIQUE") @default(autoincrement())
   loan_id Int
   amount  Int?
-
-  @@index([loan_id], map: "loan_id_idx")
 }

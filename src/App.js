@@ -24,6 +24,7 @@ function App() {
       setData(data.result[0]);
     })
   }
+  if(data){}
   return (
     <Layout>
       {data &&
@@ -34,6 +35,7 @@ function App() {
     </Layout>
 
   );
+  
 }
 
 export default App;

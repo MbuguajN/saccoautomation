@@ -28,7 +28,7 @@ export default function Adminlogin() {
       const token = "123456abcdef";
       sessionStorage.setItem("auth-token", token);
       //go to www.website.com/todo
-      navigate("/admindash");
+      navigate("/adminstat");
     } else {
       //bad combination
       alert("wrong email or password combination");

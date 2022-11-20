@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 export default function RequestLoan() {
   const [allowRequest, setAlLowRequest] = useState(false);
   const [guarantors, setGuarantors] = useState([]);
+  const [loanLimit,setLoanLimit] = useState();
   const [amount, setLoanAmount] = useState();
   const [selectedGuarantor, setSelectedGuarantor] = useState("");
 
@@ -58,6 +59,7 @@ export default function RequestLoan() {
   };*/
   useEffect(() => {
     //stkPushSim();
+    getloanLimit();
     getGuarantors();
   }, []);
   if (guarantors) {
@@ -86,9 +88,24 @@ export default function RequestLoan() {
       </tr>
     );
   });
+  const getloanLimit = () => {
+    fetch("http://localhost:3002/loanlimit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: sessionStorage.getItem("auth") }),
+    }).then((res) => res.json()).then(data=>{
+      setLoanLimit(data.loanLimit)
+    });
+  };
   return (
     <Layout>
-      <div className="overflow-auto my-8 w-full">
+      <div>
+        <h1 className="text-center my-4 font-mono text-2xl text-green-400"> REQUEST LOAN</h1>
+      </div>
+      <div className="overflow-auto my-8 w-full h-64">
+        
         <table className="table w-full ">
           <thead>
             <tr>
@@ -120,7 +137,7 @@ export default function RequestLoan() {
         <div className="stats bg-accent text-primary-content my-3">
           <div className="stat">
             <div className="stat-title">loan limit</div>
-            <div className="stat-value">KSH 89,400</div>
+            <div className="stat-value">KSH {loanLimit}</div>
             <label className="label">
               <span className="label-text">Enter amount</span>
             </label>

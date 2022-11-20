@@ -3,7 +3,10 @@ import Layout from "./layout";
 export default function RepayLoan() {
   return (
     <Layout>
-      <div className="stats my-32 bg-primary text-primary-content">
+      <div>
+        <h1 className="text-center my-8 font-mono text-2xl text-blue-700"> REPAY LOAN</h1>
+      </div>
+      <div className="stats my-8 bg-primary text-primary-content mx-32">
         <div className="stat">
           <div className="stat-title">Balance</div>
           <div className="stat-value">$89,400</div>
@@ -17,14 +20,14 @@ export default function RepayLoan() {
         </div>
       </div>
 
-      <div className="stats shadow bg-stone-400">
+      <div className="stats shadow bg-stone-400 mx-32">
         <div className="stat">
           <div className="stat-title">DAYS LEFT </div>
           <div className="stat-value">10</div>
         </div>
       </div>
       
-      <div className="form-control">
+      <div className="form-control mx-32">
         <label className="label">
           <span className="label-text">Enter amount to repay</span>
         </label>

@@ -5,7 +5,7 @@ function Layout({ children }) {
   const navigate = useNavigate();
 
   return (
-    <div data-theme="light" className=" overflow-y-hidden grid grid-cols-[500px_minmax(100px,_1fr)_200px]">
+    <div data-theme="light" className=" overflow-y-hidden grid grid-cols-[300px_minmax(100px,_1fr)_200px]">
       <aside class="w-64 " aria-label="Sidebar">
         <div class="h-min overflow-y-auto py-8 px-6 bg-gray-50 rounded dark:bg-gray-800">
           <ul class="space-y-5">

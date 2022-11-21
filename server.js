@@ -232,8 +232,10 @@ app.post("/addLoan", async (req, res) => {
 
   const guarantorObj = await prisma.user.findFirst({ where: { username: guarantor } });
   const borrower = await prisma.user.findFirst({ where: { username: username } });
+
   const loan = await prisma.loans.create({ data: { amount: loanAmount, guarantor_id: guarantorObj.id, userId: borrower.id } });
   await prisma.loan_guarantors.create({ data: { guarantorId: guarantorObj.id, loansId: loan.id } });
+
   res
     .status(200).json({ status: "success", loan: loan })
 })
@@ -241,19 +243,34 @@ app.post("/addLoan", async (req, res) => {
 app.post('/getGuarantorReq', async (req, res) => {
   const tokenDecrypted = jwt.decode(req.body.token);
   const username = tokenDecrypted.split(" ")[0];
-  const user = await prisma.user.findFirst({ where: { username: username }, include: { loan_guarantors: { include: { loan: { select: { User: true, amount: true } } } } } });
+  const user = await prisma.user.findFirst({ where: { username: username } });
+
+  const guarantorReqs = await prisma.loan_guarantors.findMany({ where: { guarantorId: user.id }, include: { loan: { select: { User: true, amount: true, statusGuaratorAccept: true, id: true } } } })
+
   res
-    .status(200).json({ status: "success", user: user });
+    .status(200).json({ status: "success", guarantorReqs });
 })
 
-
-
 app.get("/getLoans", async (req, res) => {
-  const loans = await prisma.loans.findMany({ where: { statusAdminAccept: false, }, include: { User: true, loan_guarantors: { include: { guarantor: true } } } });
+  const loans = await prisma.loans.findMany({  include: { User: true, loan_guarantors: { include: { guarantor: true } } } });
   res
-    .status(200).json({ status: "success", loans: loans });
+    .status(200).json({ loans });
 
+})
+app.post("/guarantorLoanApproval", async (req, res) => {
+  const id = req.body.id;
+  const updatedloan = await prisma.loans.update({ where: { id: id }, data: { statusGuaratorAccept: true } });
+  if (updatedloan) {
+    res.status(200).json({ status: "success" });
+  }
+})
+app.post("/adminLoanApproval", async (req, res) => {
+  const id = req.body.id;
+  const adminApprovedLoan = await prisma.loans.update({ where: { id: parseInt(id) }, data: { statusAdminAccept: true } })
+  if (adminApprovedLoan) {
+    res.status(200).json({ status: "success" });
 
+  }
 })
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

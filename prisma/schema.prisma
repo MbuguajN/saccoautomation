@@ -34,8 +34,8 @@ model User {
 
 model loan_guarantors {
   id          Int    @id @unique(map: "id_UNIQUE") @default(autoincrement())
-  guarantor   User?  @relation(fields: [guarantorId], references: [id])
-  loan        loans? @relation(fields: [loansId], references: [id])
+  guarantor   User?  @relation(fields: [guarantorId], references: [id],onDelete: Cascade,onUpdate: Cascade)
+  loan        loans? @relation(fields: [loansId], references: [id],onUpdate: Cascade,onDelete: Cascade)
   loansId     Int?   @unique
   guarantorId Int?   @unique
 }
@@ -49,13 +49,8 @@ model loans {
   statusGuaratorAccept Boolean?  @default(false)
 
   guarantor_id    Int?
-  User            User?            @relation(fields: [userId], references: [id])
+  User            User?            @relation(fields: [userId], references: [id],onDelete: Cascade,onUpdate: Cascade)
   userId          Int?
   loan_guarantors loan_guarantors?
 }
 
-model reqests {
-  id      Int  @id @unique(map: "id_UNIQUE") @default(autoincrement())
-  loan_id Int
-  amount  Int?
-}

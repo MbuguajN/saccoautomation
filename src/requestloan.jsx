@@ -9,6 +9,25 @@ export default function RequestLoan() {
   const [loanLimit,setLoanLimit] = useState();
   const [amount, setLoanAmount] = useState();
   const [selectedGuarantor, setSelectedGuarantor] = useState("");
+  const [loan,setLoan] = useState();
+  const userloans = () => {
+    fetch("http://localhost:3002/getUserLoan", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      }, body: JSON.stringify({
+        token: sessionStorage.getItem("auth"),
+      })
+      
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLoan(data.loan);
+        console.log(data.loan);
+
+      });
+      
+  };
 
   const {
     register,
@@ -61,6 +80,7 @@ export default function RequestLoan() {
     //stkPushSim();
     getloanLimit();
     getGuarantors();
+    userloans();
   }, []);
   if (guarantors) {
     console.log(guarantors);
@@ -163,7 +183,7 @@ export default function RequestLoan() {
 
           <div className="stat">
             <div className="stat-title">loan balance</div>
-            <div className="stat-value">KSH 0</div>
+            <div className="stat-value">ksh {loan?.amount}</div>
           </div>
         </div>
       </form>

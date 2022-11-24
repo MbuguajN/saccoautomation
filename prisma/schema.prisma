@@ -30,12 +30,13 @@ model User {
   loansArray   loans[]
 
   loan_guarantors loan_guarantors?
+  transaction     transaction[]
 }
 
 model loan_guarantors {
   id          Int    @id @unique(map: "id_UNIQUE") @default(autoincrement())
-  guarantor   User?  @relation(fields: [guarantorId], references: [id],onDelete: Cascade,onUpdate: Cascade)
-  loan        loans? @relation(fields: [loansId], references: [id],onUpdate: Cascade,onDelete: Cascade)
+  guarantor   User?  @relation(fields: [guarantorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  loan        loans? @relation(fields: [loansId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   loansId     Int?   @unique
   guarantorId Int?   @unique
 }
@@ -49,8 +50,15 @@ model loans {
   statusGuaratorAccept Boolean?  @default(false)
 
   guarantor_id    Int?
-  User            User?            @relation(fields: [userId], references: [id],onDelete: Cascade,onUpdate: Cascade)
+  User            User?            @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId          Int?
   loan_guarantors loan_guarantors?
 }
 
+model transaction {
+  id     String @unique @default(cuid())
+  amount Int
+  userId Int
+  transactionDate  DateTime @default(now())
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}

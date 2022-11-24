@@ -37,7 +37,7 @@ export default function Loanrequest() {
             </thead>
             <tbody>
               {loans?.map((loan, index) => {
-                if (loan.statusAdminAccept == false) {
+                if (loan.statusAdminAccept === false) {
                   return (
                     <tr>
                       <th></th>
@@ -64,7 +64,7 @@ export default function Loanrequest() {
               Select loan to approve
             </option>
             {loans?.map((val, index) => {
-              if (val.statusAdminAccept == false) {
+              if (val.statusAdminAccept === false) {
                 return <option value={val?.id}>{val.User.username}</option>;
               }
             })}

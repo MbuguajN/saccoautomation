@@ -9,7 +9,7 @@ function Adminstat() {
            
           </div>
           <div className="stat-title">Total user in system</div>
-          <div className="stat-value text-primary">25</div>
+          <div className="stat-value text-primary">7</div>
         </div>
 
         <div className="stat">
@@ -19,8 +19,8 @@ function Adminstat() {
 
         <div className="stat">
           
-          <div className="stat-value">86%</div>
-          <div className="stat-title">Tasks done</div>
+          <div className="stat-value"> null </div>
+          <div className="stat-title">Loans payed back</div>
         </div>
       </div>
 
@@ -62,7 +62,7 @@ function Adminstat() {
             </svg>
           </div>
           <div className="stat-title">Activated accounts</div>
-          <div className="stat-value">4,200</div>
+          <div className="stat-value">7</div>
         </div>
 
         <div className="stat">
@@ -82,25 +82,21 @@ function Adminstat() {
             </svg>
           </div>
           <div className="stat-title">Accounts pending Activation</div>
-          <div className="stat-value">1,200</div>
+          <div className="stat-value">0</div>
         </div>
       </div>
 
       <div className="stats bg-primary text-primary-content mt-10">
         <div className="stat">
-          <div className="stat-title">Account balance</div>
-          <div className="stat-value">$89,400</div>
-          <div className="stat-actions">
-            <button className="btn btn-sm btn-success">Add funds</button>
-          </div>
+          <div className="stat-title">Unpayed loans</div>
+          <div className="stat-value">KSH 100000</div>
+          
         </div>
 
         <div className="stat">
-          <div className="stat-title">Current balance</div>
-          <div className="stat-value">$89,400</div>
+          <div className="stat-title">USERS WITH LOANS </div>
+          <div className="stat-value">4</div>
           <div className="stat-actions">
-            <button className="btn btn-sm">Withdrawal</button>
-            <button className="btn btn-sm">deposit</button>
           </div>
         </div>
       </div>

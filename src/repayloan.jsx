@@ -1,6 +1,32 @@
 import Layout from "./layout";
+import { useEffect, useState } from "react";
 
 export default function RepayLoan() {
+  const [loan,setLoan] = useState();
+  const userloans = () => {
+    fetch("http://localhost:3002/getUserLoan", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      }, body: JSON.stringify({
+        token: sessionStorage.getItem("auth"),
+      })
+      
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLoan(data.loan);
+        console.log(data.loan);
+
+      });
+      
+  };
+  useEffect(() => {
+    userloans();
+  }, []);
+  if(loan){
+    console.log(loan);
+  
   return (
     <Layout>
       <div>
@@ -9,7 +35,7 @@ export default function RepayLoan() {
       <div className="stats my-8 bg-primary text-primary-content mx-32">
         <div className="stat">
           <div className="stat-title">Balance</div>
-          <div className="stat-value">$89,400</div>
+          <div className="stat-value">{loan.amount} ksh</div>
           <div className="stat-actions"></div>
         </div>
 
@@ -45,5 +71,5 @@ export default function RepayLoan() {
         </button>
       </div>
     </Layout>
-  );
+  )};
 }

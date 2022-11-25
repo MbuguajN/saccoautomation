@@ -3,7 +3,7 @@ import Adminlayout from "./adminlayout";
 export default function Notice() {
   return (
     <Adminlayout>
-      <div className="card w-96 bg-base-100 shadow-xl mt-5">
+      <div className="card w-96 bg-base-100 shadow-xl mt-10 mx-36">
         <figure className="px-10 pt-10">
           <img
             src="https://placeimg.com/400/225/arch"

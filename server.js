@@ -8,12 +8,15 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 const axios = require("axios")
 const cors = require('cors');
-
 const bcrypt = require('bcrypt');
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 const saltRounds = 10
 // create application/x-www-form-urlencoded parser
+
+
+
+
 app.use(bodyParser.json())
 app.use(cors({
   origin: ["htttp://localhost:3000"],
@@ -31,9 +34,18 @@ const db = mysql.createConnection({
   password: "sekiro",
   database: "sacco"
 })
+
+
+
+
 app.get('/', (req, res, next) => {
   res.send('server is active');
 })
+
+
+
+
+
 app.post("/userdata", (req, res) => {
   const tokenDecrypted = jwt.decode(req.body.token);
   const username = tokenDecrypted.split(" ")[0];
@@ -47,15 +59,23 @@ app.post("/userdata", (req, res) => {
     }
   })
 })
-app.post("/getLoanCount",async(req,res)=>{
+
+
+
+
+app.post("/getLoanCount", async (req, res) => {
   const tokenDecrypted = jwt.decode(req.body.token);
   const username = tokenDecrypted.split(" ")[0];
-  const user = await prisma.user.findFirst({where:{username:username}});
-  const loan = await prisma.loans.findMany({where:{userId:user.id}});
-  res.status(200).json({loan})
-  
-  
+  const user = await prisma.user.findFirst({ where: { username: username } });
+  const loan = await prisma.loans.findMany({ where: { userId: user.id } });
+  res.status(200).json({ loan })
+
+
 })
+
+
+
+
 
 app.post("/login", (req, res) => {
   const username = req.body.username;
@@ -83,6 +103,11 @@ app.post("/login", (req, res) => {
     }
   );
 });
+
+
+
+
+
 
 app.post("/signin", (req, res) => {
   const username = req.body.username
@@ -114,6 +139,10 @@ app.post("/signin", (req, res) => {
 
 })
 
+
+
+
+
 app.post("/update-balance", async (req, res) => {
   const balance = req.body.balance;
   console.log(balance);
@@ -134,6 +163,11 @@ app.post("/update-balance", async (req, res) => {
   )
 
 })
+
+
+
+
+
 
 app.post("/loanlimit", async (req, res) => {
 
@@ -156,9 +190,14 @@ app.get("/guarantors", (req, res) => {
   })
 })
 
+
+
+
 app.get("/token", (req, res) => {
   generateToken();
 })
+
+
 
 const generateToken = async (req, res, next) => {
   const secret = process.env.MPESA_SECRET_KEY;
@@ -179,6 +218,9 @@ const generateToken = async (req, res, next) => {
       res.status(400).json(err.message);
     })
 }
+
+
+
 
 app.post("/stk", async (req, res) => {
   const phone = req.body.phone;
@@ -228,6 +270,10 @@ app.post("/stk", async (req, res) => {
     },
   });
 });
+
+
+
+
 app.post("/addLoan", async (req, res) => {
   const loanAmount = req.body.loanAmount;
   const guarantor = req.body.guarantor;
@@ -244,6 +290,10 @@ app.post("/addLoan", async (req, res) => {
     .status(200).json({ status: "success", loan: loan })
 })
 
+
+
+
+
 app.post('/getGuarantorReq', async (req, res) => {
   const tokenDecrypted = jwt.decode(req.body.token);
   const username = tokenDecrypted.split(" ")[0];
@@ -255,12 +305,20 @@ app.post('/getGuarantorReq', async (req, res) => {
     .status(200).json({ status: "success", guarantorReqs });
 })
 
+
+
+
 app.get("/getLoans", async (req, res) => {
   const loans = await prisma.loans.findMany({ include: { User: true, loan_guarantors: { include: { guarantor: true } } } });
   res
     .status(200).json({ loans });
 
 })
+
+
+
+
+
 app.post("/guarantorLoanApproval", async (req, res) => {
   const id = req.body.id;
   const updatedloan = await prisma.loans.update({ where: { id: id }, data: { statusGuaratorAccept: true } });
@@ -268,6 +326,10 @@ app.post("/guarantorLoanApproval", async (req, res) => {
     res.status(200).json({ status: "success" });
   }
 })
+
+
+
+
 app.post("/adminLoanApproval", async (req, res) => {
   const id = req.body.id;
   const adminApprovedLoan = await prisma.loans.update({ where: { id: parseInt(id) }, data: { statusAdminAccept: true } })
@@ -276,6 +338,10 @@ app.post("/adminLoanApproval", async (req, res) => {
 
   }
 });
+
+
+
+
 app.post("/getUserTransaction", async (req, res) => {
   const tokenDecrypted = jwt.decode(req.body.token);
   const username = tokenDecrypted.split(" ")[0];
@@ -286,13 +352,21 @@ app.post("/getUserTransaction", async (req, res) => {
 
 });
 
+
+
+
+
 app.get("/getTransactions", async (req, res) => {
 
-  const transactions = await prisma.transaction.findMany({include:{User:true}});
+  const transactions = await prisma.transaction.findMany({ include: { User: true } });
   res
     .status(200).json({ transactions });
 
 });
+
+
+
+
 app.post("/getUserLoan", async (req, res) => {
   const tokenDecrypted = jwt.decode(req.body.token);
   const username = tokenDecrypted.split(" ")[0];
@@ -300,6 +374,9 @@ app.post("/getUserLoan", async (req, res) => {
   const loan = await prisma.loans.findFirst({ where: { userId: user.id } });
   res.status(200).json({ loan });
 });
+
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

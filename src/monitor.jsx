@@ -23,6 +23,7 @@ export default function Monitor() {
     console.log(transactions);
     return (
       <Adminlayout>
+        <h1 className="mt-8 text-center text-xl text-sky-500">MONITOR TRANSACTIONS</h1>
         <div>
           <table className="table w-full mt-16 ">
             <thead>
@@ -45,7 +46,7 @@ export default function Monitor() {
             })}</tbody>
             <tfoot></tfoot>
           </table>
-          <button className="btn btn-info">Download Transation pdf</button>
+          <button className="btn btn-info mt-10">Download Transation pdf</button>
         </div>
       </Adminlayout>
     );
